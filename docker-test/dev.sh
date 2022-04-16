@@ -8,7 +8,7 @@ evalsys_build() {
 }
 
 evalsys_run() {  
-   docker run -d --name=evalsys_dev evalsys_dev tail -f /dev/null
+   docker run -d --name=evalsys_dev -v "$SCRIPT_DIR/..":/home/python_user/evalsys_local evalsys_dev tail -f /dev/null
  >/dev/null
 }
 
@@ -43,6 +43,11 @@ evalsys_update() {
 
 evalsys_test() {  
     docker exec -ti evalsys_dev bash -c "cd evalsys; python setup.py test"
+}
+
+evalsys_update-and-test() {  
+    evalsys_update >/dev/null 2>&1
+    evalsys_test
 }
 
 CMD="$1"
