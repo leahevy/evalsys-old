@@ -4,10 +4,12 @@ from setuptools import setup, find_packages
 import sys
 
 with open(".python-version", "r") as f:
-    pyver_str = f.read().strip()
-    pyver_tuple = tuple([int(x) for x in pyver_str.split(".")])
-    if sys.version_info < pyver_tuple:
-        sys.exit(f'Sorry, Python < {pyver_str} is not supported')
+    prj_pyver_str = f.read().strip()
+    prj_pyver_tuple = tuple([int(x) for x in prj_pyver_str.split(".")])
+    bin_pyver_tuple = tuple([int(x) for x in python_version().split(".")])
+    if bin_pyver_tuple < prj_pyver_tuple:
+        sys.exit(f"Sorry, Python < {prj_pyver_str} is not supported")
+
 
 with open("requirements.txt", "r") as f:
     required_packages = f.read().strip().split()
