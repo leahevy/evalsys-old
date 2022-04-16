@@ -7,9 +7,7 @@ import distutils.cmd
 import distutils.log
 import subprocess
 import typing
-import io
 import re
-import os.path
 
 project_name = "evalsys"
 
