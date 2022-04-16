@@ -7,6 +7,8 @@ import distutils.cmd
 import distutils.log
 import subprocess
 import typing
+import io
+import re
 
 project_name = "evalsys"
 
@@ -20,32 +22,48 @@ def find_all_source_files():
             yield str(path)
 
 
+def generate_command(
+    desc: str | None = None,
+    args: list[tuple[str, str, str]] | None = None,
+    init_args: typing.Callable[[distutils.cmd.Command], None] | None = None,
+    fin_args: typing.Callable[[distutils.cmd.Command], None] | None = None,
+    run: typing.Callable[[distutils.cmd.Command], None] | None = None,
+):
+    if args is None:
+        args = []
+
+    class Command(distutils.cmd.Command):
+        description = desc or ""
+        user_options = args
+
+        def initialize_options(self):
+            if init_args:
+                init_args(self)
+
+        def finalize_options(self):
+            if fin_args:
+                fin_args(self)
+
+        def run(self):
+            if run:
+                run(self)
+
+    return Command
+
+
 def generate_simple_command(
     bin: str,
     desc: str,
     args: typing.Iterable[str] | None = None,
 ):
-    class SimpleCommand(distutils.cmd.Command):
-        description = desc
-        user_options: list[str] = []
+    def run(cmd: distutils.cmd.Command):
+        command = [bin]
 
-        def initialize_options(self):
-            pass
+        if args:
+            command += list(args)
+        subprocess.check_call(command)
 
-        def finalize_options(self):
-            pass
-
-        def run(self):
-            command = [bin]
-
-            if args:
-                command += list(args)
-            self.announce(
-                f"Running command: {' '.join(command)}", level=distutils.log.INFO
-            )
-            subprocess.check_call(command)
-
-    return SimpleCommand
+    return generate_command(desc=desc, run=run)
 
 
 MypyCommand = generate_simple_command(
@@ -53,7 +71,9 @@ MypyCommand = generate_simple_command(
 )
 
 BlackCommand = generate_simple_command(
-    "black", "run black on Python source files", find_all_source_files()
+    "black",
+    "run black on Python source files",
+    find_all_source_files(),
 )
 
 TestCommand = generate_simple_command(
@@ -62,6 +82,59 @@ TestCommand = generate_simple_command(
     [f"--cov={project_name}", str(pathlib.Path("tests").resolve())],
 )
 
+
+def version_init(cmd):
+    cmd.version = None
+
+
+def version_fin(cmd):
+    assert cmd.version is not None
+    pattern = re.compile("^v[0-9]+\\.[0-9]+\\.[0-9]+$")
+    assert pattern.match(cmd.version)
+
+
+def version_run(cmd):
+    command = [
+        "git",
+        "tag",
+        "-a",
+        cmd.version,
+        "-m",
+        f"Release of version {cmd.version}",
+    ]
+    subprocess.check_call(command)
+
+    # Write new version from git
+    write_version_from_git()
+
+
+CreateReleaseVersionCommand = generate_command(
+    desc="Tag commit with version",
+    args=[("version=", "v", 'Tag name containing "v{MAJOR}.{MINOR}.{PATCH}')],
+    init_args=version_init,
+    fin_args=version_fin,
+    run=version_run,
+)
+
+
+def write_version_from_git():
+    command = ["git", "describe", "--tags", "--abbrev=0"]
+    proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    if proc.stdout:
+        stdout = io.open(proc.stdout.fileno(), mode="r", encoding="utf-8")
+        version_str = "-".join(stdout.read().strip().split("-")).split("v")[1]
+        with open(pathlib.Path(f"src/{project_name}/version.py"), "w") as f:
+            f.write(f'version = "{version_str}"\n')
+            version = version_str
+    else:
+        raise ValueError("Running git failed to obtain package version")
+
+
+# Write version module based on git history (last tagged version)
+version = None
+write_version_from_git()
+
+# Check python binary version
 with open(".python-version", "r") as f:
     prj_pyver_str = f.read().strip()
     prj_pyver_tuple = tuple([int(x) for x in prj_pyver_str.split(".")])
@@ -75,7 +148,7 @@ with open("requirements.txt", "r") as f:
 
 setup_info = dict(
     name=project_name,
-    version="0.0.1",
+    version=version,
     author="Leah Lackner",
     author_email="leah.lackner+github@gmail.com",
     url="https://github.com/evyli/evalsys",
@@ -109,6 +182,7 @@ setup_info = dict(
         "mypy": MypyCommand,
         "black": BlackCommand,
         "test": TestCommand,
+        "release": CreateReleaseVersionCommand,
     },
 )
 setup(**setup_info)
