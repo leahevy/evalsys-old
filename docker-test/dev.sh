@@ -35,8 +35,10 @@ evalsys_init() {
 }
 
 evalsys_update() {
-   docker exec -ti evalsys_dev git clone https://github.com/evyli/evalsys.git || true
-   docker exec -ti evalsys_dev bash -c "cd evalsys; pip install -e ."
+    docker exec -ti evalsys_dev git clone https://github.com/evyli/evalsys.git || true
+    docker exec -ti evalsys_dev bash -c "cd evalsys; git reset --hard"
+    docker exec -ti evalsys_dev bash -c "cd evalsys; git pull"
+    docker exec -ti evalsys_dev bash -c "cd evalsys; pip install -e ."
 }
 
 evalsys_test() {  
