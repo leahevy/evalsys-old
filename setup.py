@@ -9,6 +9,7 @@ import subprocess
 import typing
 import io
 import re
+import os.path
 
 project_name = "evalsys"
 
@@ -121,16 +122,32 @@ def write_version_from_git():
     command = ["git", "describe", "--tags", "--abbrev=0"]
 
     global version
+    version_set = False
+    version_file = f"src/{project_name}/version.py"
     try:
         proc = subprocess.run(command, stdout=subprocess.PIPE, check=True)
         out = proc.stdout.decode("utf-8")
 
         version_str = "-".join(out.strip().split("-")).split("v")[1]
         version = version_str
+        version_set = True
     except subprocess.CalledProcessError:
-        version = "0.0.0"
-    with open(pathlib.Path(f"src/{project_name}/version.py"), "w") as f:
-        f.write(f'version = "{version}"\n')
+        # Try to read old version from file
+        try:
+            with open(version_file, "r") as f:
+                result = re.search(
+                    r"^version = \"([^\"]+)\"$", read_version := f.read()
+                )
+                if result:
+                    version = result.group(1)
+                else:
+                    raise ValueError("version.py is corrupted. Got:", read_version)
+        except FileNotFoundError:
+            raise ValueError("Could not determine package version")
+
+    if version_set:
+        with open(pathlib.Path(version_file), "w") as f:
+            f.write(f'version = "{version}"\n')
 
 
 # Write version module based on git history (last tagged version)
@@ -165,6 +182,7 @@ setup_info = dict(
     long_description_content_type="text/markdown",
     platforms="Linux, Mac OSX",
     license="GPLv3",
+    include_package_data=True,
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "Environment :: Console",

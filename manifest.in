@@ -1,0 +1,4 @@
+include README.md
+include .python-version
+include requirements.txt
+include LICENSE
