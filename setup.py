@@ -143,7 +143,12 @@ def write_version_from_git():
                 else:
                     raise ValueError("version.py is corrupted. Got:", read_version)
         except FileNotFoundError:
-            raise ValueError("Could not determine package version")
+            # Set the version to 0.0.0 if the version can not be read
+            # from git and can not be read from an old version file.
+            #
+            # This can happen, for example, when building in a GitHub Action.
+            version = "0.0.0"
+            print("Warning: Could not determine package version")
 
     if version_set:
         with open(pathlib.Path(version_file), "w") as f:
