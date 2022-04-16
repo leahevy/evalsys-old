@@ -1,4 +1,5 @@
-import evalsys
+import evalsys.main as evalsys_cmd
+
 
 def test_example():
-    assert True
+    evalsys_cmd.main()
