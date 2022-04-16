@@ -119,16 +119,13 @@ CreateReleaseVersionCommand = generate_command(
 def write_version_from_git():
     command = ["git", "describe", "--tags", "--abbrev=0"]
 
-    global version
-    version_set = False
+    version = None
     version_file = f"src/{project_name}/version.py"
     try:
         proc = subprocess.run(command, stdout=subprocess.PIPE, check=True)
         out = proc.stdout.decode("utf-8")
 
-        version_str = "-".join(out.strip().split("-")).split("v")[1]
-        version = version_str
-        version_set = True
+        version = "-".join(out.strip().split("-")).split("v")[1]
     except subprocess.CalledProcessError:
         # Try to read old version from file
         try:
@@ -148,14 +145,14 @@ def write_version_from_git():
             version = "0.0.0"
             print("Warning: Could not determine package version")
 
-    if version_set:
-        with open(pathlib.Path(version_file), "w") as f:
-            f.write(f'version = "{version}"\n')
+    with open(pathlib.Path(version_file), "w") as f:
+        f.write(f'version = "{version}"\n')
+    return version
 
 
-# Write version module based on git history (last tagged version)
-version = None
-write_version_from_git()
+# Retrieves version based on git history (last tagged version)
+# and writes it to version.py
+version = write_version_from_git()
 
 # Check python binary version
 with open(".python-version", "r") as f:
