@@ -5,6 +5,8 @@ Tool to configure Linux based systems including population of dotfiles and packa
 
 [![Tests](https://github.com/evyli/evalsys/actions/workflows/python-app.yml/badge.svg)](https://github.com/evyli/evalsys/actions/workflows/python-app.yml)
 
+![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+
 ## License
 Copyright (C)  2022 Leah Lackner
 
