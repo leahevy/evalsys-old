@@ -125,6 +125,7 @@ def write_version_from_git():
         version_str = "-".join(stdout.read().strip().split("-")).split("v")[1]
         with open(pathlib.Path(f"src/{project_name}/version.py"), "w") as f:
             f.write(f'version = "{version_str}"\n')
+            global version
             version = version_str
     else:
         raise ValueError("Running git failed to obtain package version")
