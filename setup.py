@@ -120,14 +120,17 @@ CreateReleaseVersionCommand = generate_command(
 def write_version_from_git():
     command = ["git", "describe", "--tags", "--abbrev=0"]
 
-    proc = subprocess.run(command, stdout=subprocess.PIPE, check=True)
-    out = proc.stdout.decode("utf-8")
+    global version
+    try:
+        proc = subprocess.run(command, stdout=subprocess.PIPE, check=True)
+        out = proc.stdout.decode("utf-8")
 
-    version_str = "-".join(out.strip().split("-")).split("v")[1]
-    with open(pathlib.Path(f"src/{project_name}/version.py"), "w") as f:
-        f.write(f'version = "{version_str}"\n')
-        global version
+        version_str = "-".join(out.strip().split("-")).split("v")[1]
         version = version_str
+    except subprocess.CalledProcessError:
+        version = "0.0.0"
+    with open(pathlib.Path(f"src/{project_name}/version.py"), "w") as f:
+        f.write(f'version = "{version}"\n')
 
 
 # Write version module based on git history (last tagged version)
