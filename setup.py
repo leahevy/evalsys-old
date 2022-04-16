@@ -43,7 +43,8 @@ setup_info = dict(
             'evalsys=evalsys.main:run_typer'
         ],
     },
-    packages=find_packages(),
+    package_dir={'': 'src'},
+    packages=find_packages(where="src"),
     install_requires=required_packages,
 )
 setup(**setup_info)
