@@ -3,7 +3,7 @@ Tool to configure Linux based systems including population of dotfiles and packa
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-[![Tests](https://github.com/evyli/evalsys/actions/workflows/python-app.yml/badge.svg)](https://github.com/evyli/evalsys/actions/workflows/python-app.yml)
+[![Tests](https://github.com/evyli/evalsys/workflows/Tests/badge.svg)](https://github.com/evyli/evalsys/actions/workflows/python-app.yml)
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
