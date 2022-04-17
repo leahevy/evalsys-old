@@ -2,7 +2,7 @@
     "python.formatting.provider": "black",
     "python.linting.mypyEnabled": true,
     "python.linting.enabled": true,
-    "python.analysis.typeCheckingMode": "strict",
+    "python.analysis.typeCheckingMode": "basic",
     "python.formatting.blackPath": "darker",
     "python.formatting.blackArgs": [
         "--isort"
