@@ -42,6 +42,11 @@ def run_cli():
             sys.argv += ["--help"]
             command()
             raise  # Never reached
+        elif "Got unexpected extra argument (" in str(e):
+            sys.argv += ["--help"]
+            command(standalone_mode=False)
+            print(f"\n{str(e)}")
+            result = 4
         else:
             print("Error:", file=sys.stderr)
             if debug:
