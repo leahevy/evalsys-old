@@ -1,4 +1,4 @@
-import evalsys.main as evalsys_cmd
+import evalsys.cli as evalsys_cmd
 
 
 def test_example():

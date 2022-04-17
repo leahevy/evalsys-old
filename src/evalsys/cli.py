@@ -17,10 +17,6 @@ def main(
     ),
 ):
     typer.echo(f"Hello World")
-    raise typer.Abort()
-    while True:
-        pass
-    raise 5
 
 
 def run_cli_standalone():
