@@ -1,13 +1,15 @@
 #!/usr/bin/env python
-import pathlib
-from platform import python_version
-from setuptools import setup, find_packages
-import sys
+# type: ignore
 import distutils.cmd
 import distutils.log
-import subprocess
-import typing
+import pathlib
 import re
+import subprocess
+import sys
+import typing
+from platform import python_version
+
+from setuptools import find_packages, setup
 
 project_name = "evalsys"
 
@@ -69,10 +71,10 @@ MypyCommand = generate_simple_command(
     "mypy", "run mypy on Python source files", find_all_source_files()
 )
 
-BlackCommand = generate_simple_command(
-    "black",
-    "run black on Python source files",
-    find_all_source_files(),
+FormatCommand = generate_simple_command(
+    "darker",
+    "run formatter on Python source files",
+    ["--isort"] + list(find_all_source_files()) + ["setup.py"],
 )
 
 TestCommand = generate_simple_command(
@@ -201,7 +203,7 @@ setup_info = dict(
     install_requires=required_packages,
     cmdclass={
         "mypy": MypyCommand,
-        "black": BlackCommand,
+        "format": FormatCommand,
         "test": TestCommand,
         "release": CreateReleaseVersionCommand,
     },
