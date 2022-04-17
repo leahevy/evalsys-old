@@ -196,7 +196,7 @@ setup_info = dict(
     ],
     zip_safe=True,
     entry_points={
-        "console_scripts": ["evalsys=evalsys.cli:run_cli"],
+        "console_scripts": ["evalsys=evalsys.cli:run_cli_standalone"],
     },
     package_dir={"": "src"},
     packages=find_packages(where="src"),

@@ -23,7 +23,7 @@ def main(
     raise 5
 
 
-def run_cli():
+def run_cli_standalone():
     command = typer.main.get_command(_app)
 
     debug = {"-d", "--debug"}.intersection(sys.argv)
@@ -59,4 +59,4 @@ def run_cli():
 
 
 if __name__ == "__main__":
-    run_cli()
+    run_cli_standalone()
