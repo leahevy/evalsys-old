@@ -1,11 +1,22 @@
 # evalsys
 Tool to configure Linux based systems including population of dotfiles and package installation.
 
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/evyli/evalsys/graphs/commit-activity)
+
+[![Build](https://github.com/evyli/evalsys/workflows/Build/badge.svg)](https://github.com/evyli/evalsys/actions/workflows/build.yml)
+
+[![Tests](https://github.com/evyli/evalsys/workflows/Tests/badge.svg)](https://github.com/evyli/evalsys/actions/workflows/tests.yml)
+
+[![Style](https://github.com/evyli/evalsys/workflows/Style/badge.svg)](https://github.com/evyli/evalsys/actions/workflows/style.yml)
+
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-[![Tests](https://github.com/evyli/evalsys/workflows/Tests/badge.svg)](https://github.com/evyli/evalsys/actions/workflows/python-app.yml)
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 
-![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
+[![Linux](https://svgshare.com/i/Zhy.svg)](https://svgshare.com/i/Zhy.svg)
+
+[![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg)
+
 
 ## License
 Copyright (C)  2022 Leah Lackner
