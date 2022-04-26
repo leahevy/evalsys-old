@@ -34,7 +34,7 @@ pure-eval==0.2.2
 py==1.11.0
 Pygments==2.11.2
 pyparsing==3.0.8
-pytest==7.1.1
+pytest==7.1.2
 pytest-cov==3.0.0
 rich==12.2.0
 shellingham==1.4.0
