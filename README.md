@@ -1,6 +1,3 @@
-# evalsys
-Tool to configure Linux based systems including population of dotfiles and package installation.
-
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/evyli/evalsys/graphs/commit-activity)
 [![Build](https://github.com/evyli/evalsys/workflows/Build/badge.svg)](https://github.com/evyli/evalsys/actions/workflows/build.yml)
 [![Tests](https://github.com/evyli/evalsys/workflows/Tests/badge.svg)](https://github.com/evyli/evalsys/actions/workflows/tests.yml)
@@ -11,6 +8,8 @@ Tool to configure Linux based systems including population of dotfiles and packa
 [![macOS](https://svgshare.com/i/ZjP.svg)](https://svgshare.com/i/ZjP.svg)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
+## Evalsys
+Tool to configure Linux based systems including population of dotfiles and package installation.
 
 ## License
 Copyright (C)  2022 Leah Lackner
