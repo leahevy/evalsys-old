@@ -1,4 +1,6 @@
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/evyli/evalsys/graphs/commit-activity)
+> This project is currently not maintained. It has been superseded by <https://github.com/leahevy/evalsys>.
+
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)](https://GitHub.com/evyli/evalsys/graphs/commit-activity)
 [![Build](https://github.com/evyli/evalsys/workflows/Build/badge.svg)](https://github.com/evyli/evalsys/actions/workflows/build.yml)
 [![Tests](https://github.com/evyli/evalsys/workflows/Tests/badge.svg)](https://github.com/evyli/evalsys/actions/workflows/tests.yml)
 [![Style](https://github.com/evyli/evalsys/workflows/Style/badge.svg)](https://github.com/evyli/evalsys/actions/workflows/style.yml)
